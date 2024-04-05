@@ -27,8 +27,6 @@ export class BkError extends Error {
   }
 }
 
-type ErrorHandleFunction = () => void;
-
 class HttpTool {
   protected httpInstance = axios.create();
 
@@ -92,7 +90,7 @@ class HttpTool {
   async send<DataType = any>(
     config: AxiosRequestConfig,
     httpOption?: HttpOption
-  ): Promise<BkResponse> {
+  ): Promise<BkResponse<DataType>> {
     try {
       const axiosResponse = await this.httpInstance<BkResponse>(config);
       return axiosResponse.data as BkResponse<DataType>;
@@ -106,4 +104,4 @@ class HttpTool {
   }
 }
 
-export const httpTool = new HttpTool(import.meta.env['HTTP_BASE']);
+export const httpTool = new HttpTool(import.meta.env['VITE_BASEURL']);
